@@ -82,7 +82,7 @@ def process(gpx_file: str, split_by_days: bool, time_interval: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Split GPX file')
-    parser.add_argument('-d', '--days', action='store_true', default=False, help='How many days')
+    parser.add_argument('-d', '--days', action='store_true', default=False, help='Split multi-day track into single day tracks')
     parser.add_argument('-t', '--time', type=str, default="", help='Split by time intervals (for exampe 1m, 2s, 3h)')
     parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs='*', help='GPX file')
     args = parser.parse_args()
