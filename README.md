@@ -6,7 +6,13 @@
 * `gpxsimplify`: Simplify GPX files
 * `gpxsplitter`: Split GPX files by time gaps
 
-## See also:
+## Installation
+
+```
+pip install gpx-cmd-tools
+```
+
+## See also
 
 * <https://github.com/tkrajina/gpxpy>: Python library for GPX files
 * <https://github.com/tkrajina/gpxgo>: Golang library for GPX files
