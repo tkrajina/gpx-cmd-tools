@@ -38,7 +38,7 @@ def main() -> None:
 
     for gpx_file in gpx_files:
         print(f"Reading {gpx_file}")
-        gpxs.append(gpxpy.parse(open(gpx_file)))
+        gpxs.append(gpxpy.parse(open(gpx_file, encoding='utf-8')))
 
     if sort_by_time:
         print("Sorting by time")
@@ -69,5 +69,5 @@ def main() -> None:
             print("Removing extensions")
             common.clean_extensions(base_gpx)
     
-        with open(out_file, "w") as f:
+        with open(out_file, "w", encoding='utf-8') as f:
             f.write(base_gpx.to_xml())

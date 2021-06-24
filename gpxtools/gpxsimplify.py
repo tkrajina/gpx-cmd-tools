@@ -27,5 +27,5 @@ def main() -> None:
     
     g.simplify(max_distance=distance)
 
-    with open(common.prefix_filename(gpx_file, "_simplified"), "w") as f:
+    with open(common.prefix_filename(gpx_file, "_simplified"), "w", encoding='utf-8') as f:
         f.write(g.to_xml())

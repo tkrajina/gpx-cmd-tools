@@ -123,7 +123,7 @@ def run(gpx_files: List[str], miles: bool, seconds: bool, only_track: bool) -> N
 
     for gpx_file in gpx_files:
         try:
-            gpx = mod_gpxpy.parse(open(gpx_file))
+            gpx = mod_gpxpy.parse(open(gpx_file, encoding='utf-8'))
             print_gpx_info(gpx, gpx_file, miles, seconds, only_track)
         except Exception as e:
             mod_logging.exception(e)

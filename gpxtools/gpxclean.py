@@ -28,7 +28,7 @@ def main() -> None:
     output = args.output
 
     for gpx_file in gpx_files:
-        with open(gpx_file) as f:
+        with open(gpx_file, encoding='utf-8') as f:
             g = gpx_parser.parse(f)
         if extensions:
             common.clean_extensions(g)
@@ -53,6 +53,6 @@ def main() -> None:
     if not output:
         output = common.prefix_filename(gpx_file, "clean_")
 
-    with open(output, "w") as f:
+    with open(output, "w", encoding='utf-8') as f:
         f.write(g.to_xml())
 
