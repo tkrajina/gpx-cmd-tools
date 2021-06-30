@@ -21,13 +21,13 @@ def get_time(g: gpxpy.GPX) -> Optional[datetime.datetime]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Merge GPX files')
-    parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs='*', help='GPX file')
+    # parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs='*', help='GPX file')
     parser.add_argument('-o', '--output', type=str, default='merged.gpx', help='Output GPX file')
     parser.add_argument('-m', '--time', action='store_true', help='Sort by time')
     parser.add_argument('-f', '--folder', type=str, help='Folder containing files')
-    args = parser.parse_args()
+    
+    args, gpx_files = parser.parse_known_args()
 
-    gpx_files = args.gpx_files
     out_file = args.output
     sort_by_time = args.time
     folder = args.folder
@@ -46,7 +46,7 @@ def main() -> None:
 
     for gpx_file in gpx_files:
         print(f"Reading {gpx_file}")
-        gpxs.append(gpxpy.parse(open(gpx_file, encoding='utf-8')))
+        gpxs.append(gpx_parser.parse(open(gpx_file, encoding='utf-8')))
 
     if sort_by_time:
         print("Sorting by time")
