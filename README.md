@@ -49,44 +49,52 @@ For more options: `gpxinfo -h`
 
 ```
 $ gpxclean -h
-usage: gpxclean [-h] [-e] [-t] [-x] [-r] [-tr] [-a] [-w] [-o F]
+usage: gpxclean [-h] [-e] [-m] [-x] [-r] [-t] [-a] [-w] [-o OUTPUT] [-f FOLDER] [-p PREFIX]
 
 Clean GPX tracks
 
 optional arguments:
-  -h, --help        show this help message and exit
-  -e, --extensions  Remove extensions
-  -t, --time        Remove time
-  -x, --elevations  Remove extensions
-  -r, --routes      Remove routes
-  -tr, --tracks     Remove tracks
-  -a, --author      Remove author data
-  -w, --waypoints   Waypoints
-  -o F, --output F  Output GPX file
+  -h, --help            show this he
+  -e, --extensions      Remove exten
+  -m, --time            Remove time
+  -x, --elevations      Remove exten
+  -r, --routes          Remove route
+  -t, --tracks          Remove track
+  -a, --author          Remove autho
+  -w, --waypoints       Remove waypo
+  -o OUTPUT, --output OUTPUT      
+                        Output GPX file
+  -f FOLDER, --folder FOLDER
+                        Folder containing files
+  -p PREFIX, --prefix PREFIX
+                        Prefix of output files
 ```
 
 ## gpxmerge
 
 ```
 $ gpxmerge -h
-usage: gpxmerge [-h] [-o F] [-t] [gpx [gpx ...]]
+usage: gpxmerge [-h] [-o OUTPUT] [-m] [-f FOLDER] [gpx ...]
 
 Merge GPX files
 
 positional arguments:
-  gpx               GPX file
+  gpx                   GPX file
 
 optional arguments:
-  -h, --help        show this help message and exit
-  -o F, --output F  Output GPX file
-  -t, --time        Sort by time
+  -h, --help            show this help message and exit    
+  -o OUTPUT, --output OUTPUT
+                        Output GPX file
+  -m, --time            Sort by time
+  -f FOLDER, --folder FOLDER
+                        Folder containing files
 ```
 
 ## gpxsimplify
 
 ```
 $ gpxsimplify -h
-usage: gpxsimplify [-h] [-d DISTANCE] gpx
+usage: gpxsimplify [-h] [-d DISTANCE] [-o OUTPUT] [-f FOLDER] [-p PREFIX] gpx
 
 Simplify tracks using the Ramer-Douglas-Peucker algorithm
 
@@ -97,6 +105,12 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DISTANCE, --distance DISTANCE
                         Max distance
+  -o OUTPUT, --output OUTPUT
+                        Output GPX file
+  -f FOLDER, --folder FOLDER
+                        Folder containing files
+  -p PREFIX, --prefix PREFIX
+                        Prefix of output files
 ```
 
 ## gpxsplitter

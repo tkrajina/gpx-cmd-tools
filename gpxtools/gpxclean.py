@@ -9,18 +9,18 @@ from typing import *
 def main() -> None:
     parser = argparse.ArgumentParser(description='Clean GPX tracks')
     parser.add_argument('-e', '--extensions', action='store_true', help='Remove extensions')
-    parser.add_argument('-t', '--time', action='store_true', help='Remove time')
+    parser.add_argument('-m', '--time', action='store_true', help='Remove time')
     parser.add_argument('-x', '--elevations', action='store_true', help='Remove extensions')
     parser.add_argument('-r', '--routes', action='store_true', help='Remove routes')
-    parser.add_argument('-tr', '--tracks', action='store_true', help='Remove tracks')
+    parser.add_argument('-t', '--tracks', action='store_true', help='Remove tracks')
     parser.add_argument('-a', '--author', action='store_true', help='Remove author data')
-    parser.add_argument('-w', '--waypoints', action='store_true', help='Waypoints')
-    parser.add_argument('-o', '--output', metavar='F', type=str, help='Output GPX file')
-    parser.add_argument('-d', '--dir', metavar='D', type=str, help='Directory containing files')
+    parser.add_argument('-w', '--waypoints', action='store_true', help='Remove waypoints')
+    parser.add_argument('-o', '--output', type=str, help='Output GPX file')
+    parser.add_argument('-f', '--folder', type=str, help='Folder containing files')
+    parser.add_argument('-p', '--prefix', type=str, default = 'cleaned_', help='Prefix of output files')
 
     args, gpx_files = parser.parse_known_args()
 
-    directory: bool = args.dir
     extensions: bool = args.extensions
     time: bool = args.time
     elevations: bool = args.elevations
@@ -29,9 +29,11 @@ def main() -> None:
     author: bool = args.author
     waypoints: bool = args.waypoints
     output = args.output
+    folder = args.folder
+    prefix = args.prefix
 
-    if directory:
-        filelist = glob.glob(directory + '*.gpx')
+    if folder:
+        filelist = glob.glob(folder + '*.gpx')
         gpx_files.extend(filelist)
 
     for gpx_file in gpx_files:
@@ -57,8 +59,8 @@ def main() -> None:
         if waypoints:
             g.waypoints = []
 
-        if not output:
-            out_gpx = common.prefix_filename(gpx_file, "_clean")
+        if len(gpx_files) > 1 or (not output):
+            out_gpx = common.prefix_filename(gpx_file, prefix)
 
         with open(out_gpx, "w", encoding='utf-8') as f:
             print(f'Cleaned {gpx_file} => {out_gpx}')

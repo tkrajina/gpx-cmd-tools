@@ -1,6 +1,8 @@
 import argparse
-import gpxpy.gpx as gpx
-import gpxpy
+import gpxpy.gpx as gpxpy
+import gpxpy as gpx_parser
+import glob
+
 import datetime
 import os.path as path
 import datetime
@@ -9,7 +11,7 @@ from . import common
 
 from typing import *
 
-def get_time(g: gpx.GPX) -> Optional[datetime.datetime]:
+def get_time(g: gpxpy.GPX) -> Optional[datetime.datetime]:
     for t in g.tracks:
         for s in t.segments:
             for pt in s.points:
@@ -20,13 +22,19 @@ def get_time(g: gpx.GPX) -> Optional[datetime.datetime]:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Merge GPX files')
     parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs='*', help='GPX file')
-    parser.add_argument('-o', '--output', metavar='F', type=str, default='merged.gpx', help='Output GPX file')
-    parser.add_argument('-t', '--time', action='store_true', help='Sort by time')
+    parser.add_argument('-o', '--output', type=str, default='merged.gpx', help='Output GPX file')
+    parser.add_argument('-m', '--time', action='store_true', help='Sort by time')
+    parser.add_argument('-f', '--folder', type=str, help='Folder containing files')
     args = parser.parse_args()
 
     gpx_files = args.gpx_files
     out_file = args.output
     sort_by_time = args.time
+    folder = args.folder
+
+    if folder:
+        filelist = glob.glob(folder + '*.gpx')
+        gpx_files.extend(filelist)
 
     keep_extensions = True
 
@@ -44,7 +52,7 @@ def main() -> None:
         print("Sorting by time")
         gpxs = sorted(gpxs, key=get_time)
 
-    base_gpx: Optional[gpx.GPX] = None
+    base_gpx: Optional[gpxpy.GPX] = None
     for g in gpxs:
         if base_gpx:
             if len(g.nsmap) != len(base_gpx.nsmap):
