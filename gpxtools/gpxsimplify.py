@@ -16,7 +16,7 @@ from typing import *
 def main() -> None:
     parser = mod_argparse.ArgumentParser(description='Simplify tracks using the Ramer-Douglas-Peucker algorithm')
     parser.add_argument('-d', '--distance', type=float, default=10, help='Max distance')
-    parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs=1, help='GPX file')
+    # parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs=1, help='GPX file')
     parser.add_argument('-o', '--output', type=str, help='Output GPX file')
     parser.add_argument('-f', '--folder', type=str, help='Folder containing files')
     parser.add_argument('-p', '--prefix', type=str, default = 'simplified_', help='Prefix of output files')
@@ -33,7 +33,6 @@ def main() -> None:
     
     for gpx_file in gpx_files:
 
-        print(f'Input {gpx_file}')
         with open(gpx_file, encoding='utf-8') as f:
             g = gpx_parser.parse(f)
                 
