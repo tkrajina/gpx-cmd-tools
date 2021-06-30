@@ -7,8 +7,9 @@ import logging as mod_logging
 import math as mod_math
 import argparse as mod_argparse
 
-import gpxpy as mod_gpxpy
-import gpxpy.gpx as mod_gpx
+import gpxpy.gpx as gpxpy
+import gpxpy as gpx_parser
+import glob
 
 from typing import *
 
@@ -50,7 +51,7 @@ def format_speed(speed: float, miles: bool) -> str:
         return '{:.2f}m/s = {:.2f}km/h'.format(speed, speed * 3600. / 1000.)
 
 
-def print_gpx_part_info(gpx_part: Union[mod_gpx.GPX, mod_gpx.GPXTrack, mod_gpx.GPXTrackSegment], indentation: str='    ', miles: bool = False, seconds: bool = False) -> None:
+def print_gpx_part_info(gpx_part: Union[gpxpy.GPX, gpxpy.GPXTrack, gpxpy.GPXTrackSegment], indentation: str='    ', miles: bool = False, seconds: bool = False) -> None:
     """
     gpx_part may be a track or segment.
     """
@@ -91,7 +92,7 @@ def print_gpx_part_info(gpx_part: Union[mod_gpx.GPX, mod_gpx.GPXTrack, mod_gpx.G
     print('')
 
 
-def print_gpx_info(gpx: mod_gpx.GPX, gpx_file: str, miles: bool, seconds: bool, only_track: bool) -> None:
+def print_gpx_info(gpx: gpxpy.GPX, gpx_file: str, miles: bool, seconds: bool, only_track: bool) -> None:
     print('File: %s' % gpx_file)
 
     if gpx.name:
@@ -123,7 +124,7 @@ def run(gpx_files: List[str], miles: bool, seconds: bool, only_track: bool) -> N
 
     for gpx_file in gpx_files:
         try:
-            gpx = mod_gpxpy.parse(open(gpx_file))
+            gpx = gpx_parser.parse(open(gpx_file, encoding='utf-8'))
             print_gpx_info(gpx, gpx_file, miles, seconds, only_track)
         except Exception as e:
             mod_logging.exception(e)
@@ -138,12 +139,20 @@ def main() -> None:
     parser.add_argument('-s', '--seconds', action='store_true', help='print times as N seconds, rather than HH:MM:SS')
     parser.add_argument('-m', '--miles', action='store_true', help='print distances and speeds using miles and feet')
     parser.add_argument('-d', '--debug', action='store_true', help='show detailed logging')
+    parser.add_argument('-f', '--folder', type=str, help='Folder containing files')
+    
     args, gpx_files = parser.parse_known_args()
     seconds = args.seconds
     miles = args.miles
     debug = args.debug
     only_track = args.track
+    folder: bool = args.folder
+
+    if folder:
+        filelist = glob.glob(folder + '*.gpx')
+        gpx_files.extend(filelist)
 
     if debug:
         mod_logging.basicConfig(level=mod_logging.DEBUG, format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+
     run(gpx_files=gpx_files, miles=miles, seconds=seconds, only_track=only_track)

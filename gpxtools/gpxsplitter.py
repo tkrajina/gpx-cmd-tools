@@ -23,7 +23,7 @@ def save_gpx(gpg: gpxpy.GPX) -> None:
 
 def process(gpx_file: str, split_by_days: bool, time_interval: str) -> None:
     print(f"Opening {gpx_file}")
-    with open(gpx_file) as f:
+    with open(gpx_file, encoding='utf-8') as f:
         gpx = gpx_parser.parse(f)
 
     split_func: Callable[[datetime.datetime, datetime.datetime, int], bool]
@@ -76,14 +76,14 @@ def process(gpx_file: str, split_by_days: bool, time_interval: str) -> None:
             gpx_interval.remove_empty()
 
             fn = common.prefix_filename(gpx_file, time_from.strftime(TIME_FORMAT))
-            with open(fn, "w") as f:
+            with open(fn, "w", encoding='utf-8') as f:
                 f.write(gpx_interval.to_xml())
                 print(f"Saved {fn}")
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='Split GPX file')
     parser.add_argument('-d', '--days', action='store_true', default=False, help='Split multi-day track into single day tracks')
-    parser.add_argument('-t', '--time', type=str, default="", help='Split by time intervals (for exampe 1m, 2s, 3h)')
+    parser.add_argument('-m', '--time', type=str, default="", help='Split by time intervals (for exampe 1m, 2s, 3h)')
     parser.add_argument('gpx_files', metavar='gpx', type=str, default='', nargs='*', help='GPX file')
     args = parser.parse_args()
 
