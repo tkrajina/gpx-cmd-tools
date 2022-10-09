@@ -1,3 +1,5 @@
 .DS_Store
 .vscode
 __pycache__
+gpx_cmd_tools.egg-info
+.idea
