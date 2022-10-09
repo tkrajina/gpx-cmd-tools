@@ -8,6 +8,22 @@
 
 ## gpxinfo
 
+```
+$ gpxinfo -h
+usage: gpxinfo [-s] [-m] [-d] [file ...]
+
+Command line utility to extract basic statistics from gpx file(s)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t, --track           Only root track
+  -s, --seconds         print times as N seconds, rather than HH:MM:SS
+  -m, --miles           print distances and speeds using miles and feet
+  -u {M,I,N}, --unit {M,I,N}
+                        unit used to print distances and speeds : [M]etric, [I]mperial (miles and feet) or [N]autical miles
+  -d, --debug           show detailed logging
+```
+
 Example:
 
 ```
@@ -42,8 +58,6 @@ File: test_files/2014-with-wpts.gpx
         Points: 413
         Avg distance between points: 10.78m
 ```
-
-For more options: `gpxinfo -h`
 
 ## gpxclean
 
